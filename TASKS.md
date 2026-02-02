@@ -8,12 +8,12 @@
 - [ ] Add "Explain this" mode
 
 ## 📋 To Do
-- [ ] Set up TypeScript Node.js project structure
 - [ ] Implement basic CLI wrapper logic (spawn child process)
 - [ ] Implement `git` error handler (MVP focus)
 - [ ] Integrate with LLM API for fix generation
 
 ## 🏗️ In Progress
+- [ ] Set up TypeScript Node.js project structure
 - [ ] Initial Repo Setup
 
 ## ✅ Done
