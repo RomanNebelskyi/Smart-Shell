@@ -8,11 +8,11 @@
 - [ ] Add "Explain this" mode
 
 ## 📋 To Do
-- [ ] Implement basic CLI wrapper logic (spawn child process)
 - [ ] Implement `git` error handler (MVP focus)
 - [ ] Integrate with LLM API for fix generation
 
 ## 🏗️ In Progress
+- [ ] Implement basic CLI wrapper logic (spawn child process)
 - [ ] Set up TypeScript Node.js project structure
 - [ ] Initial Repo Setup
 

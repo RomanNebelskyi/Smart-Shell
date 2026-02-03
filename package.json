@@ -2,6 +2,10 @@
   "name": "smart-shell-mvp",
   "version": "1.0.0",
   "description": "A local CLI wrapper that intercepts errors from common commands (git, docker, npm) and offers AI-generated fixes instantly.",
+  "type": "module",
+  "bin": {
+    "smart": "./dist/index.js"
+  },
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -15,7 +19,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Romannebelskyipz/smart-shell-mvp/issues"
   },

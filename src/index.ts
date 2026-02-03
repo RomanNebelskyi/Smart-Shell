@@ -1,15 +1,15 @@
-import { Command } from 'commander';
+#!/usr/bin/env node
 import chalk from 'chalk';
+import { runWrapper } from './wrapper.js';
 
-const program = new Command();
+const args = process.argv.slice(2);
 
-program
-  .name('smart-shell')
-  .description('A smart shell wrapper')
-  .version('0.0.1');
+const command = args[0];
+if (!command) {
+  console.log(chalk.green('SmartShell - AI-powered CLI Wrapper'));
+  console.log('Usage: smart <command> [args...]');
+  process.exit(0);
+}
+const commandArgs = args.slice(1);
 
-program.action(() => {
-  console.log(chalk.green('SmartShell v0.0.1'));
-});
-
-program.parse(process.argv);
+runWrapper(command, commandArgs);
