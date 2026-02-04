@@ -1,10 +1,10 @@
 import { execa } from 'execa';
 import chalk from 'chalk';
+import ora from 'ora';
+import { handleGitError } from './handlers/git.js';
+import { getFixFromLLM } from './llm.js';
 
 export async function runWrapper(command: string, args: string[]) {
-  // Optional: Print what we are running
-  // console.log(chalk.gray(`> Running: ${command} ${args.join(' ')}`));
-
   try {
     const subprocess = execa(command, args, {
       reject: false, // Do not throw on non-zero exit code
@@ -22,10 +22,25 @@ export async function runWrapper(command: string, args: string[]) {
 
     if (result.failed) {
       console.log(); // Add a newline for separation
-      console.log(chalk.red(`⚠️ Error detected:`));
-      console.log(chalk.red(result.stderr.trim()));
       
-      // TODO: Send error to AI for analysis
+      let fix: string | null = null;
+
+      if (command === 'git') {
+        fix = handleGitError(result.stderr);
+        if (fix) {
+          console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
+        }
+      }
+
+      if (!fix) {
+        const spinner = ora('Asking AI for help...').start();
+        const aiFix = await getFixFromLLM(`${command} ${args.join(' ')}`, result.stderr);
+        spinner.stop();
+
+        if (aiFix) {
+          console.log(chalk.green(`🤖 AI Suggestion: ${aiFix}`));
+        }
+      }
     }
 
     process.exit(result.exitCode);
