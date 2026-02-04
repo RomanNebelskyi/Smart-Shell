@@ -8,13 +8,13 @@
 - [ ] Add "Explain this" mode
 
 ## 📋 To Do
-- [ ] Integrate with LLM API for fix generation
-- [ ] Implement `npm` error handler
 - [ ] Implement `docker` error handler
 
 ## 🏗️ In Progress
+- [ ] Implement `npm` error handler
 
 ## ✅ Done
+- [ ] Integrate with LLM API for fix generation
 - [ ] Implement `git` error handler (MVP focus)
 - [ ] Implement basic CLI wrapper logic (spawn child process)
 - [ ] Set up TypeScript Node.js project structure
