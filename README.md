@@ -8,7 +8,11 @@ A local CLI wrapper that intercepts errors from common commands (git, docker, np
 - Sends stderr to LLM for analysis
 - Proposes fixes with "Run this? [Y/n]"
 
+## Installation
+`npm install -g .` or `npm link`
+
 ## Usage
+`smart <command>`
 ```bash
 smart git commit -m "wip"
 # if error -> suggests fix
