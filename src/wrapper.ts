@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { handleGitError } from './handlers/git.js';
 import { handleNpmError } from './handlers/npm.js';
+import { handleDockerError } from './handlers/docker.js';
 import { getFixFromLLM } from './llm.js';
 
 export async function runWrapper(command: string, args: string[]) {
@@ -33,6 +34,11 @@ export async function runWrapper(command: string, args: string[]) {
         }
       } else if (['npm', 'pnpm', 'yarn'].includes(command)) {
         fix = handleNpmError(result.stderr);
+        if (fix) {
+          console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
+        }
+      } else if (command === 'docker') {
+        fix = handleDockerError(result.stderr);
         if (fix) {
           console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
         }
