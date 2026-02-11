@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
+import chalk from 'chalk';
 
 const CONFIG_FILE = path.join(os.homedir(), '.smart-shell.json');
 
@@ -25,8 +26,9 @@ export function saveConfig(key: string, value: string): void {
   if (key === 'openaiApiKey') {
     config.openaiApiKey = value;
   }
-  fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+  fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2), { mode: 0o600 });
   console.log(`✅ Config saved to ${CONFIG_FILE}`);
+  console.log(chalk.yellow('⚠️  Security: File permissions set to 600 (owner-only). Environment variables are more secure for shared systems.'));
 }
 
 export function getApiKey(): string | undefined {
