@@ -1,3 +1,4 @@
+
 export function handleGitError(stderr: string): string | null {
   // Case 1: No upstream configured
   // Error: fatal: The current branch <branch> has no upstream branch.
