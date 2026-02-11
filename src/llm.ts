@@ -1,10 +1,11 @@
 import chalk from 'chalk';
+import { getApiKey } from './config.js';
 
 export async function getFixFromLLM(command: string, stderr: string): Promise<string | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getApiKey();
 
   if (!apiKey) {
-    console.warn(chalk.yellow('\n⚠️  OPENAI_API_KEY not found. AI suggestions disabled.'));
+    console.warn(chalk.yellow('\n⚠️  OPENAI_API_KEY not found. Set it via env var or run: smart config --key <YOUR_KEY>'));
     return null;
   }
 

@@ -8,12 +8,14 @@
 - [ ] Add "Explain this" mode
 
 ## 📋 To Do
-- [ ] Implement `docker` error handler
 
 ## 🏗️ In Progress
-- [ ] Implement `npm` error handler
+- [ ] Add user config for LLM provider
 
 ## ✅ Done
+- [ ] Add `smart` alias configuration
+- [ ] Implement `docker` error handler
+- [ ] Implement `npm` error handler
 - [ ] Integrate with LLM API for fix generation
 - [ ] Implement `git` error handler (MVP focus)
 - [ ] Implement basic CLI wrapper logic (spawn child process)
