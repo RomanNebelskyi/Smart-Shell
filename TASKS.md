@@ -1,18 +1,14 @@
 # SmartShell Kanban
 
 ## 📥 Backlog
-- [ ] Add `smart` alias configuration
-- [ ] Implement `npm` error handler
-- [ ] Implement `docker` error handler
-- [ ] Add user config for LLM provider (OpenAI/Anthropic)
 - [ ] Add "Explain this" mode
 
 ## 📋 To Do
 
 ## 🏗️ In Progress
-- [ ] Add user config for LLM provider
 
 ## ✅ Done
+- [ ] Add user config for LLM provider
 - [ ] Add `smart` alias configuration
 - [ ] Implement `docker` error handler
 - [ ] Implement `npm` error handler
