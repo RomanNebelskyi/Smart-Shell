@@ -34,6 +34,3 @@ pnpm-debug.log*
 Thumbs.db
 
 SUGGESTIONS.md
-# Ignore implementation summary if you want, but usually README is kept.
-# I'll just change *.md to SUGGESTIONS.md as requested.
-SUGGESTIONS.md
