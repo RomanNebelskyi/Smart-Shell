@@ -28,15 +28,17 @@ const configCmd = program
     .argument('[value]', 'Config value')
     .action((action, key, value) => {
         if (action === 'set' && key && value) {
-            configService.set(key as any, value);
-            console.log(chalk.green(`✅ Configuration updated: ${key} = ${value}`));
-        } else if (action === 'get' && key) {
-            const val = configService.get(key as any);
-            if (val !== undefined) {
-                console.log(`${key}: ${val}`);
-            } else {
-                console.log(chalk.yellow(`${key} is not set.`));
+            try {
+                configService.set(key as any, value);
+                const maskedValue = configService.getForDisplay(key as any);
+                console.log(chalk.green(`✅ Configuration updated: ${key} = ${maskedValue}`));
+            } catch (error: any) {
+                console.error(chalk.red(`❌ Error: ${error.message}`));
+                process.exit(1);
             }
+        } else if (action === 'get' && key) {
+            const maskedValue = configService.getForDisplay(key as any);
+            console.log(`${key}: ${maskedValue}`);
         } else {
             console.log(chalk.yellow('Usage:'));
             console.log('  smart config set <key> <value>');

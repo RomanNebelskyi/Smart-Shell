@@ -45,7 +45,9 @@ class OpenAIProvider extends BaseLLMProvider {
       const data = await response.json() as any;
       return data.choices?.[0]?.message?.content?.trim() || null;
     } catch (error) {
-      console.error('OpenAI API Error:', error);
+      if (process.env.SMART_DEBUG) {
+        console.error('OpenAI API Error:', error);
+      }
       return null;
     }
   }
@@ -81,7 +83,9 @@ class AnthropicProvider extends BaseLLMProvider {
             const data = await response.json() as any;
             return data.content?.[0]?.text?.trim() || null;
         } catch (error) {
-            console.error('Anthropic API Error:', error);
+            if (process.env.SMART_DEBUG) {
+                console.error('Anthropic API Error:', error);
+            }
             return null;
         }
     }
@@ -108,7 +112,9 @@ class OllamaProvider extends BaseLLMProvider {
             const data = await response.json() as any;
             return data.response?.trim() || null;
         } catch (error) {
-             console.error('Ollama API Error:', error);
+             if (process.env.SMART_DEBUG) {
+                 console.error('Ollama API Error:', error);
+             }
             return null;
         }
     }

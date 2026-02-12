@@ -130,6 +130,20 @@ SmartShell includes specialized error handlers for common CLI tools:
 
 > **Note**: If no built-in handler matches, SmartShell automatically falls back to AI-powered suggestions.
 
+## Security Features
+
+SmartShell implements several security best practices:
+
+- **API Key Masking**: Sensitive values are automatically masked in console output (e.g., `sk12...ab34`)
+- **Input Validation**: All configuration values are validated before storage
+  - Provider must be `openai`, `anthropic`, or `ollama`
+  - URLs are validated and checked for HTTPS (warns on HTTP for remote servers)
+  - API keys and models must be non-empty strings
+- **Error Sanitization**: Error messages are sanitized by default. Set `SMART_DEBUG=1` to see full error details
+- **Config File Permissions**: Configuration file is created with `600` permissions (owner-only read/write)
+- **Command Injection Protection**: Uses `execa` with separated arguments to prevent shell injection
+- **Schema Validation**: Config file structure is validated on load to prevent corruption
+
 ## Security & Privacy
 
 - **Local Storage**: API keys are stored in `~/.smart-shell.json` with **600 permissions** (read/write by owner only).
