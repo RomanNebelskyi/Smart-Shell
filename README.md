@@ -95,6 +95,41 @@ smart explain "git rebase -i HEAD~3"
 # This command starts an interactive rebase...
 ```
 
+## Built-in Error Handlers
+
+SmartShell includes specialized error handlers for common CLI tools:
+
+### Git
+
+- No upstream configured → `git push --set-upstream origin <branch>`
+- Merge conflicts → Resolve and commit
+- Uncommitted changes → `git stash`
+- Detached HEAD → `git checkout -b <new-branch>`
+- Authentication failures
+- Nothing to commit
+- Not a git repository
+
+### Docker
+
+- Permission denied on socket → Add user to docker group
+- Daemon not running → Start Docker service
+- Image manifest not found
+- Port already allocated
+- No space left on device → `docker system prune`
+- Dockerfile not found
+- Container name conflict
+
+### Node Package Managers (npm/yarn/pnpm)
+
+- Missing script → List available scripts
+- Cannot find module → Install missing dependency
+- Permission denied → Fix directory permissions
+- Peer dependency missing
+- Yarn lockfile issues
+- pnpm peer dependency errors
+
+> **Note**: If no built-in handler matches, SmartShell automatically falls back to AI-powered suggestions.
+
 ## Security & Privacy
 
 - **Local Storage**: API keys are stored in `~/.smart-shell.json` with **600 permissions** (read/write by owner only).
