@@ -1,5 +1,5 @@
 {
-  "name": "smart-shell-mvp",
+  "name": "smart-shell",
   "version": "1.0.0",
   "description": "A local CLI wrapper that intercepts errors from common commands (git, docker, npm, yarn, pnpm) and offers AI-generated fixes using OpenAI, Anthropic, or Ollama.",
   "type": "module",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Romannebelskyipz/smart-shell-mvp.git"
+    "url": "git+https://github.com/Romannebelskyipz/smart-shell.git"
   },
   "keywords": [
     "cli",
@@ -29,9 +29,9 @@
   "author": "Romannebelskyipz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Romannebelskyipz/smart-shell-mvp/issues"
+    "url": "https://github.com/Romannebelskyipz/smart-shell/issues"
   },
-  "homepage": "https://github.com/Romannebelskyipz/smart-shell-mvp#readme",
+  "homepage": "https://github.com/Romannebelskyipz/smart-shell#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.2.0",

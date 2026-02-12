@@ -17,7 +17,7 @@ A local CLI wrapper that intercepts errors from common commands (git, docker, np
 
 ```bash
 # Install globally
-npm install -g smart-shell-mvp
+npm install -g smart-shell
 
 # Run setup wizard
 smart init
@@ -30,8 +30,8 @@ smart git commit -m "test"
 
 ```bash
 # Clone the repo
-git clone https://github.com/Romannebelskyipz/smart-shell-mvp.git
-cd smart-shell-mvp
+git clone https://github.com/Romannebelskyipz/smart-shell.git
+cd smart-shell
 
 # Install dependencies and build
 npm install
@@ -224,4 +224,4 @@ npm start -- <args>
 ---
 
 **License**: MIT
-**Repo**: https://github.com/Romannebelskyipz/smart-shell-mvp
+**Repo**: https://github.com/Romannebelskyipz/smart-shell
