@@ -6,7 +6,7 @@ import { configService } from './services/config.js';
 import { llmService } from './services/llm.js';
 import { executionService } from './services/execution.js';
 import { handleGitError } from './handlers/git.js';
-import { handleNpmError } from './handlers/npm.js';
+import { handleNodeError } from './handlers/node.js';
 import { handleDockerError } from './handlers/docker.js';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -108,7 +108,7 @@ program
         
         // Static Handlers
         if (command === 'git') fix = handleGitError(result.stderr);
-        else if (['npm', 'pnpm', 'yarn'].includes(command)) fix = handleNpmError(result.stderr);
+        else if (['npm', 'pnpm', 'yarn'].includes(command)) fix = handleNodeError(command, result.stderr);
         else if (command === 'docker') fix = handleDockerError(result.stderr);
 
         if (fix) {
