@@ -9,7 +9,6 @@ import { handleGitError } from './handlers/git.js';
 import { handleNodeError } from './handlers/node.js';
 import { handleDockerError } from './handlers/docker.js';
 import * as fs from 'fs';
-import * as path from 'path';
 
 const program = new Command();
 
@@ -21,44 +20,40 @@ program
   .version(packageJson.version);
 
 // Config Command
-const configCommand = program.command('config')
-  .description('Manage configuration')
-  .option('--set <key> <value>', 'Set a config value (e.g., --set openaiApiKey sk-...)')
-  .option('--get <key>', 'Get a config value')
-  .action((options) => {
-    if (options.set) {
-      // Handle the case where key might be passed as "set" if spacing is weird, but commander handles --set key value?
-      // Wait, .option('--set <key> <value>') implies --set takes 2 args? No, commander option takes at most 1 arg usually unless custom processing.
-      // Better: smart config set <key> <value>
-    }
-  });
-
-program
+const configCmd = program
     .command('config')
     .description('Manage configuration')
-    .argument('[action]', 'get or set') // optional argument
+    .argument('[action]', 'get or set')
     .argument('[key]', 'Config key')
     .argument('[value]', 'Config value')
     .action((action, key, value) => {
         if (action === 'set' && key && value) {
             configService.set(key as any, value);
-            console.log(chalk.green(`Configuration updated: ${key} = ${value}`));
+            console.log(chalk.green(`✅ Configuration updated: ${key} = ${value}`));
         } else if (action === 'get' && key) {
             const val = configService.get(key as any);
-            console.log(`${key}: ${val}`);
+            if (val !== undefined) {
+                console.log(`${key}: ${val}`);
+            } else {
+                console.log(chalk.yellow(`${key} is not set.`));
+            }
         } else {
             console.log(chalk.yellow('Usage:'));
             console.log('  smart config set <key> <value>');
             console.log('  smart config get <key>');
-            console.log('\nKeys: openaiApiKey, anthropicApiKey, ollamaUrl, provider, model');
+            console.log('\nAvailable keys:');
+            console.log('  provider        - LLM provider (openai | anthropic | ollama)');
+            console.log('  model           - Model name (e.g., gpt-4o-mini, claude-3-5-sonnet-latest)');
+            console.log('  openaiApiKey    - OpenAI API key');
+            console.log('  anthropicApiKey - Anthropic API key');
+            console.log('  ollamaUrl       - Ollama server URL (default: http://localhost:11434)');
         }
     });
-
 
 // Explain Command
 program
   .command('explain <query...>')
-  .description('Explain a command or query')
+  .description('Explain a command or query using AI')
   .action(async (queryParts) => {
     const query = queryParts.join(' ');
     const spinner = ora('Asking AI for explanation...').start();
@@ -69,16 +64,15 @@ program
         console.log(chalk.blue('\n📝 Explanation:'));
         console.log(explanation);
     } else {
-        console.log(chalk.red('Failed to get explanation. Check your API key.'));
+        console.log(chalk.red('Failed to get explanation. Check your API key and provider settings.'));
     }
   });
 
-// Catch-all for wrapping
+// Catch-all for wrapping commands
 program
   .arguments('[args...]')
   .passThroughOptions()
-  .action(async (args, commandObj) => {
-    // If no args, show help
+  .action(async (args) => {
     if (!args || args.length === 0) {
         program.help();
         return;
@@ -87,22 +81,17 @@ program
     const command = args[0];
     const commandArgs = args.slice(1);
 
-    // Filter out internal commands if they somehow leak, but commander handles specific commands first.
-    // However, if I run "smart git status", "git" is args[0].
-    
-    // Check Config
     const apiKey = configService.getApiKey();
     const provider = configService.get('provider') || 'openai';
     
     if (!apiKey && provider !== 'ollama') {
-         console.warn(chalk.yellow(`\n⚠️  ${provider.toUpperCase()}_API_KEY not found. Run: smart config set ${provider}ApiKey <YOUR_KEY>`));
-         // We continue anyway, but AI won't work
+         console.warn(chalk.yellow(`\n⚠️  ${provider.toUpperCase()}_API_KEY not found. Run: smart config set ${provider === 'openai' ? 'openaiApiKey' : 'anthropicApiKey'} <YOUR_KEY>`));
     }
 
     const result = await executionService.execute(command, commandArgs);
 
     if (result.exitCode !== 0) {
-        console.log(); // Newline
+        console.log();
 
         let fix: string | null = null;
         
@@ -113,10 +102,9 @@ program
 
         if (fix) {
             console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
-            // We could offer to run it, but for MVP just showing is fine.
         }
 
-        // AI Handler
+        // AI Fallback
         if (!fix) {
             const spinner = ora('Asking AI for help...').start();
             try {
@@ -127,9 +115,8 @@ program
                 } else {
                     console.log(chalk.grey('No AI suggestion available.'));
                 }
-            } catch (e) {
+            } catch {
                 spinner.stop();
-                // fail silently
             }
         }
     }
