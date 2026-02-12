@@ -5,6 +5,8 @@ export interface Config {
   ollamaUrl?: string;
   provider?: 'openai' | 'anthropic' | 'gemini' | 'ollama';
   model?: string;
+  timeout?: number;
+  autoRun?: boolean;
 }
 
 export interface LLMRequest {

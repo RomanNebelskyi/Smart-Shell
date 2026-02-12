@@ -6,8 +6,25 @@ A local CLI wrapper that intercepts errors from common commands (git, docker, np
 
 - **Smart Error Interception**: Wraps `git`, `docker`, `npm`, `yarn`, `pnpm` and detects failures.
 - **Multi-Provider Support**: Use **OpenAI**, **Anthropic**, **Google Gemini**, or **Ollama** (local LLM).
+- **Interactive Fix Confirmation**: Prompts you to apply suggested fixes with one keypress.
+- **Command History**: Tracks errors and fixes in `~/.smart-shell-history.json`.
 - **Explain Mode**: Ask AI to explain any command or error using `smart explain`.
+- **Setup Wizard**: `smart init` for guided configuration.
+- **Configurable Timeouts**: Set custom timeout for AI requests.
 - **Privacy-Focused**: Keys stored locally with restrictive permissions (600).
+
+## Quick Start
+
+```bash
+# Install globally
+npm install -g smart-shell-mvp
+
+# Run setup wizard
+smart init
+
+# Start using
+smart git commit -m "test"
+```
 
 ## Installation
 
@@ -79,7 +96,29 @@ smart config get provider
 smart config get model
 ```
 
+### 4. Advanced Configuration
+
+**Timeout** (default: 10 seconds):
+
+```bash
+smart config set timeout 20
+```
+
+**Auto-run fixes** (skip confirmation prompt):
+
+```bash
+smart config set autoRun true
+```
+
 ## Usage
+
+### 🎯 Setup Wizard
+
+First time? Run the interactive setup:
+
+```bash
+smart init
+```
 
 ### 🛡️ Smart Wrapper
 
@@ -88,8 +127,10 @@ Prefix any command with `smart`. If it fails, SmartShell will analyze the error 
 ```bash
 smart git commit -m "wip"
 # If it fails, you'll see:
-# 💡 Suggested Fix: ...
-# 🤖 AI Suggestion: ...
+# 💡 Suggested Fix: git add .
+#    Run this fix? [Y/n]: y
+# 🔧 Applying fix...
+# ✅ Fix applied successfully!
 ```
 
 ### 🧠 Explain Mode
@@ -100,6 +141,16 @@ Want to know what a command does before running it? Or explain a complex error?
 smart explain "git rebase -i HEAD~3"
 # 📝 Explanation:
 # This command starts an interactive rebase...
+```
+
+### 📜 Command History
+
+View recent errors and fixes:
+
+```bash
+smart history           # Show last 10 entries
+smart history -n 20     # Show last 20 entries
+smart history --clear   # Clear history
 ```
 
 ## Built-in Error Handlers

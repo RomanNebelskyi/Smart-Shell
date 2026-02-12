@@ -57,6 +57,14 @@ export class ConfigService {
       validated.model = config.model.trim();
     }
     
+    if (typeof config.timeout === 'number' && config.timeout > 0) {
+      validated.timeout = config.timeout;
+    }
+    
+    if (typeof config.autoRun === 'boolean') {
+      validated.autoRun = config.autoRun;
+    }
+    
     return validated;
   }
 
