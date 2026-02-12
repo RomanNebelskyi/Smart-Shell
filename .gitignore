@@ -33,4 +33,4 @@ pnpm-debug.log*
 # System Files
 Thumbs.db
 
-SUGGESTIONS.md
+*.md
