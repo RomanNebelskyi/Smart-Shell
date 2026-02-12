@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as os from 'os';
 import type { Config } from '../interfaces.js';
 
-const SENSITIVE_KEYS = ['openaiApiKey', 'anthropicApiKey'] as const;
-const VALID_PROVIDERS = ['openai', 'anthropic', 'ollama'] as const;
+const SENSITIVE_KEYS = ['openaiApiKey', 'anthropicApiKey', 'geminiApiKey'] as const;
+const VALID_PROVIDERS = ['openai', 'anthropic', 'gemini', 'ollama'] as const;
 
 export class ConfigService {
   private configFile: string;
@@ -43,6 +43,10 @@ export class ConfigService {
     
     if (typeof config.anthropicApiKey === 'string') {
       validated.anthropicApiKey = config.anthropicApiKey;
+    }
+    
+    if (typeof config.geminiApiKey === 'string') {
+      validated.geminiApiKey = config.geminiApiKey;
     }
     
     if (typeof config.ollamaUrl === 'string') {
@@ -110,7 +114,7 @@ export class ConfigService {
       value = this.validateOllamaUrl(value as string) as Config[K];
     }
     
-    if ((key === 'openaiApiKey' || key === 'anthropicApiKey' || key === 'model') && typeof value === 'string') {
+    if ((key === 'openaiApiKey' || key === 'anthropicApiKey' || key === 'geminiApiKey' || key === 'model') && typeof value === 'string') {
       if (!value.trim()) {
         throw new Error(`${key} cannot be empty`);
       }
@@ -139,6 +143,9 @@ export class ConfigService {
       }
       if (provider === 'anthropic') {
         return process.env.ANTHROPIC_API_KEY || this.config.anthropicApiKey;
+      }
+      if (provider === 'gemini') {
+        return process.env.GEMINI_API_KEY || this.config.geminiApiKey;
       }
        return undefined;
   }

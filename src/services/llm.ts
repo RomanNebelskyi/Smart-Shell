@@ -120,6 +120,39 @@ class OllamaProvider extends BaseLLMProvider {
     }
 }
 
+class GeminiProvider extends BaseLLMProvider {
+    constructor(apiKey: string | undefined, model: string = 'gemini-2.0-flash-exp') {
+        super(apiKey, model, 'https://generativelanguage.googleapis.com/v1beta/models');
+    }
+
+    async generate(request: LLMRequest): Promise<string | null> {
+        if (!this.apiKey) return null;
+
+        try {
+            const response = await fetch(`${this.apiUrl}/${this.model}:generateContent?key=${this.apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `${request.systemPrompt}\n\n${request.userPrompt}`
+                        }]
+                    }]
+                })
+            });
+
+            if (!response.ok) return null;
+            const data = await response.json() as any;
+            return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+        } catch (error) {
+             if (process.env.SMART_DEBUG) {
+                 console.error('Gemini API Error:', error);
+             }
+            return null;
+        }
+    }
+}
+
 export class LLMService {
   private provider: LLMProvider;
 
@@ -130,6 +163,9 @@ export class LLMService {
     switch (providerType) {
       case 'anthropic':
         this.provider = new AnthropicProvider(configService.get('anthropicApiKey'), model || 'claude-3-5-sonnet-latest');
+        break;
+      case 'gemini':
+        this.provider = new GeminiProvider(configService.get('geminiApiKey'), model || 'gemini-2.0-flash-exp');
         break;
       case 'ollama':
         this.provider = new OllamaProvider(configService.get('ollamaUrl'), model || 'llama3');

@@ -1,11 +1,11 @@
 # SmartShell MVP
 
-A local CLI wrapper that intercepts errors from common commands (git, docker, npm) and offers AI-generated fixes instantly. Now with support for multiple LLM providers and an "Explain Mode".
+A local CLI wrapper that intercepts errors from common commands (git, docker, npm, yarn, pnpm) and offers AI-generated fixes using OpenAI, Anthropic, Google Gemini, or Ollama.
 
 ## Features
 
 - **Smart Error Interception**: Wraps `git`, `docker`, `npm`, `yarn`, `pnpm` and detects failures.
-- **Multi-Provider Support**: Use **OpenAI**, **Anthropic**, or **Ollama** (local LLM).
+- **Multi-Provider Support**: Use **OpenAI**, **Anthropic**, **Google Gemini**, or **Ollama** (local LLM).
 - **Explain Mode**: Ask AI to explain any command or error using `smart explain`.
 - **Privacy-Focused**: Keys stored locally with restrictive permissions (600).
 
@@ -30,11 +30,12 @@ SmartShell supports multiple LLM providers. By default, it uses OpenAI.
 
 ### 1. Set your Provider
 
-Use `openai` (default), `anthropic`, or `ollama`.
+Use `openai` (default), `anthropic`, `gemini`, or `ollama`.
 
 ```bash
 smart config set provider openai
 smart config set provider anthropic
+smart config set provider gemini
 smart config set provider ollama
 ```
 
@@ -52,6 +53,12 @@ smart config set openaiApiKey sk-...
 
 ```bash
 smart config set anthropicApiKey sk-ant-...
+```
+
+**Google Gemini:**
+
+```bash
+smart config set geminiApiKey AIza...
 ```
 
 **Ollama:**

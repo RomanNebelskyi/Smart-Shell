@@ -1,8 +1,9 @@
 export interface Config {
   openaiApiKey?: string;
   anthropicApiKey?: string;
+  geminiApiKey?: string;
   ollamaUrl?: string;
-  provider?: 'openai' | 'anthropic' | 'ollama';
+  provider?: 'openai' | 'anthropic' | 'gemini' | 'ollama';
   model?: string;
 }
 

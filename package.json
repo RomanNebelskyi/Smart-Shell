@@ -23,6 +23,7 @@
     "error-handling",
     "openai",
     "anthropic",
+    "gemini",
     "ollama"
   ],
   "author": "Romannebelskyipz",

@@ -44,10 +44,11 @@ const configCmd = program
             console.log('  smart config set <key> <value>');
             console.log('  smart config get <key>');
             console.log('\nAvailable keys:');
-            console.log('  provider        - LLM provider (openai | anthropic | ollama)');
-            console.log('  model           - Model name (e.g., gpt-4o-mini, claude-3-5-sonnet-latest)');
+            console.log('  provider        - LLM provider (openai | anthropic | gemini | ollama)');
+            console.log('  model           - Model name (e.g., gpt-4o-mini, claude-3-5-sonnet-latest, gemini-2.0-flash-exp)');
             console.log('  openaiApiKey    - OpenAI API key');
             console.log('  anthropicApiKey - Anthropic API key');
+            console.log('  geminiApiKey    - Google Gemini API key');
             console.log('  ollamaUrl       - Ollama server URL (default: http://localhost:11434)');
         }
     });
@@ -87,7 +88,8 @@ program
     const provider = configService.get('provider') || 'openai';
     
     if (!apiKey && provider !== 'ollama') {
-         console.warn(chalk.yellow(`\n⚠️  ${provider.toUpperCase()}_API_KEY not found. Run: smart config set ${provider === 'openai' ? 'openaiApiKey' : 'anthropicApiKey'} <YOUR_KEY>`));
+         const keyName = provider === 'openai' ? 'openaiApiKey' : provider === 'anthropic' ? 'anthropicApiKey' : 'geminiApiKey';
+         console.warn(chalk.yellow(`\n⚠️  ${provider.toUpperCase()}_API_KEY not found. Run: smart config set ${keyName} <YOUR_KEY>`));
     }
 
     const result = await executionService.execute(command, commandArgs);
