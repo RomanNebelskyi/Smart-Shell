@@ -1,12 +1,12 @@
-import { execa } from 'execa';
-import type { ExecutionResult } from '../interfaces.js';
+import { execa } from "execa";
+import type { ExecutionResult } from "../interfaces.js";
 
 export class ExecutionService {
   async execute(command: string, args: string[]): Promise<ExecutionResult> {
     try {
       const subprocess = execa(command, args, {
         reject: false,
-        stdio: 'pipe', 
+        stdio: "pipe",
       });
 
       if (subprocess.stdout) {
@@ -21,14 +21,14 @@ export class ExecutionService {
       return {
         stdout: result.stdout,
         stderr: result.stderr,
-        exitCode: result.exitCode ?? 1, 
+        exitCode: result.exitCode ?? 1,
       };
     } catch (error: any) {
-        return {
-            stdout: '',
-            stderr: error.message,
-            exitCode: 1
-        };
+      return {
+        stdout: "",
+        stderr: error.message,
+        exitCode: 1,
+      };
     }
   }
 }

@@ -3,7 +3,7 @@ export interface HistoryEntry {
   command: string;
   error: string;
   fix: string;
-  source: 'handler' | 'ai';
+  source: "handler" | "ai";
   applied: boolean;
 }
 

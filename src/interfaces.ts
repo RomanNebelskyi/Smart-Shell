@@ -3,7 +3,7 @@ export interface Config {
   anthropicApiKey?: string;
   geminiApiKey?: string;
   ollamaUrl?: string;
-  provider?: 'openai' | 'anthropic' | 'gemini' | 'ollama';
+  provider?: "openai" | "anthropic" | "gemini" | "ollama";
   model?: string;
   timeout?: number;
   autoRun?: boolean;

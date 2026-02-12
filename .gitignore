@@ -32,3 +32,5 @@ pnpm-debug.log*
 
 # System Files
 Thumbs.db
+
+*.md
