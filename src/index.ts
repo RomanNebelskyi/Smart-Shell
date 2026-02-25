@@ -9,6 +9,8 @@ import { historyService } from "./services/history.js";
 import { handleGitError } from "./handlers/git.js";
 import { handleNodeError } from "./handlers/node.js";
 import { handleDockerError } from "./handlers/docker.js";
+import { handleKubectlError } from "./handlers/kubectl.js";
+import { handleTerraformError } from "./handlers/terraform.js";
 import * as fs from "fs";
 import * as readline from "readline";
 
@@ -272,6 +274,10 @@ program
       else if (["npm", "pnpm", "yarn"].includes(command))
         fix = handleNodeError(command, result.stderr);
       else if (command === "docker") fix = handleDockerError(result.stderr);
+      else if (command === "kubectl" || command === "k")
+        fix = handleKubectlError(result.stderr);
+      else if (command === "terraform" || command === "tf")
+        fix = handleTerraformError(result.stderr);
 
       if (fix) {
         console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
