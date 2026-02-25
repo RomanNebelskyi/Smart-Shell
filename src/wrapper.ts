@@ -4,6 +4,8 @@ import ora from 'ora';
 import { handleGitError } from './handlers/git.js';
 import { handleNpmError } from './handlers/npm.js';
 import { handleDockerError } from './handlers/docker.js';
+import { handleKubectlError } from './handlers/kubectl.js';
+import { handleTerraformError } from './handlers/terraform.js';
 import { getFixFromLLM } from './llm.js';
 
 export async function runWrapper(command: string, args: string[]) {
@@ -33,12 +35,22 @@ export async function runWrapper(command: string, args: string[]) {
           console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
         }
       } else if (['npm', 'pnpm', 'yarn'].includes(command)) {
-        fix = handleNpmError(result.stderr);
+        fix = handleNpmError(command, result.stderr);
         if (fix) {
           console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
         }
       } else if (command === 'docker') {
         fix = handleDockerError(result.stderr);
+        if (fix) {
+          console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
+        }
+      } else if (command === 'kubectl' || command === 'k') {
+        fix = handleKubectlError(result.stderr);
+        if (fix) {
+          console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
+        }
+      } else if (command === 'terraform' || command === 'tf') {
+        fix = handleTerraformError(result.stderr);
         if (fix) {
           console.log(chalk.green(`💡 Suggested Fix: ${fix}`));
         }
