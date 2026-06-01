@@ -30,7 +30,7 @@ smart git commit -m "test"
 
 ```bash
 # Clone the repo
-git clone https://github.com/Romannebelskyipz/smart-shell.git
+git clone https://github.com/RomanNebelskyi/Smart-Shell.git
 cd smart-shell
 
 # Install dependencies and build
@@ -224,4 +224,4 @@ npm start -- <args>
 ---
 
 **License**: MIT
-**Repo**: https://github.com/Romannebelskyipz/smart-shell
+**Repo**: https://github.com/RomanNebelskyi/Smart-Shell

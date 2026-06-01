@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Romannebelskyipz/smart-shell.git"
+    "url": "git+https://github.com/RomanNebelskyi/Smart-Shell.git"
   },
   "keywords": [
     "cli",
@@ -29,9 +29,9 @@
   "author": "Romannebelskyipz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Romannebelskyipz/smart-shell/issues"
+    "url": "https://github.com/RomanNebelskyi/Smart-Shell/issues"
   },
-  "homepage": "https://github.com/Romannebelskyipz/smart-shell#readme",
+  "homepage": "https://github.com/RomanNebelskyi/Smart-Shell#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.2.0",
